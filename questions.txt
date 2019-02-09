@@ -9,7 +9,7 @@ For example, ‘0x0f4’, ‘0acdadecf822eeff32aca5830e438cb54aa722e3’, ‘8BA
 2.Here is the pseudo code of a function that is defined recursively:
 -  f(0) = 1;
 -  f(1) = 3;
--  f(n)= 3 * f(n-1) f(n-2);
+-  f(n)= 3 * f(n-1) - f(n-2);
 Provide an implementation for ‘f’. Bonus points for a non recursive implementation.
 
 >
