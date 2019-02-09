@@ -1,0 +1,16 @@
+<h2>Liste des articles</h2>
+<div class="row ">
+  <% for @item in @database %>
+    <div class="col-lg-4 d-flex align-items-stretch space">
+      <div class="card" > 
+        <img src="<%= @item[:photo] %>" class="card-img-top" width="100%" height="225"> 
+        <div class="card-body">
+          <h5 class="card-title"><%= @item[:title] %></h5>
+          <p class="card-text"><%= @item[:content] %></p>
+          <a href="/posts/<%= @item[:title] %>" class="btn btn-primary">Read Article</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
