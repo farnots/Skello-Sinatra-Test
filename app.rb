@@ -38,6 +38,9 @@ class WebApp < Sinatra::Application
   
   get '/posts/:title' do
     @post = @database.find { |post| post[:title] == params[:title]}
+    if @post.nil?
+      redirect "404"
+    end
     @index = @database.find_index { |post| post[:title] == params[:title]}
     @comment = @comments[@index]
     erb :posts
@@ -74,6 +77,14 @@ class WebApp < Sinatra::Application
     end
     save
     redirect "/posts/#{params[:title]}"
+  end
+
+  get '/404' do
+    erb :notFound
+  end
+
+  not_found do
+    redirect "/404" 
   end
 
   # Method
