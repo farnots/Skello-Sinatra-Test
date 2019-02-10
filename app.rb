@@ -45,6 +45,17 @@ class WebApp < Sinatra::Application
     @comment = @comments[@index]
     erb :posts
   end
+  
+  delete '/posts/:title' do
+    @index = @database.find_index { |post| post[:title] == params[:title]}
+    if @index.nil?
+      redirect "404"
+    end
+    @database.delete_at(@index)
+    @comments.delete_at(@index)
+    save
+    redirect "/"
+  end
 
 
   post '/posts/:title/vote' do 
@@ -75,6 +86,17 @@ class WebApp < Sinatra::Application
     if !@params[:comment].nil?
       @comment.push(@params[:comment])
     end
+    save
+    redirect "/posts/#{URI.escape(params[:title])}"
+  end
+
+  delete '/posts/:title/comment' do
+    @index = @database.find_index { |post| post[:title] == params[:title]}
+    if @index.nil?
+      redirect "404"
+    end
+    @comment = @comments[@index]
+    @comment.delete_at(Integer(params[:comment_index]))
     save
     redirect "/posts/#{URI.escape(params[:title])}"
   end

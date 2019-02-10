@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-9">
+  <div class="col-md-9">
     <article>
       <h1 class="mt-5"><%= @post[:title] %></h1>
       <p><%= @post[:content] %></p>
@@ -8,24 +8,30 @@
       <h2>Comments <small><span class="badge badge-primary"><%= @comment.count %></span></small></h2>
       <ul class="list-group list-group-flush">
 
-        <% for comment in @comment %>
-          <li class="list-group-item"><%= comment %></li>
+        <% @comment.each_with_index do | comment, index| %>
+          <li class="list-group-item">
+          <form action="/posts/<%=@post[:title]%>/comment" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <label><%= comment %></label>
+            <small><button name="comment_index" class="btn btn-outline-warning btn-sm" value="<%= index %>" type="submit">Destroy</button></small>
+          </form>
+          </li>
         <% end %>
       </ul>
       <br />
       <div class="row">
-      <form class="form-inline" action="/posts/<%= @post[:title] %>/comment" method="post">
-        <div class="col">
-        <input name="comment" class="form-control" placeholder="Write your comment"></input>
-        </div>
-        <div class="col">
-        <button type="submit" class="btn btn-primary">Send</button>
-        </div>
-      </form>
+        <form class="form-inline" action="/posts/<%= @post[:title] %>/comment" method="post">
+          <div class="col">
+            <input name="comment" class="form-control" placeholder="Write your comment"></input>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  <div class="col-3">
+  <div class="col-md-3">
     <h2 class="mt-5">Vote</h2>
     <% if !@post[:rating].nil? %>
 
@@ -48,5 +54,13 @@
               <button type="submit" name="vote" value="upvote" class="btn btn-outline-success">Upvote</button>
             </div>
           </form>
+          <h2 class="mt-5">Danger zone</h2>
+          <form action="/posts/<%=@post[:title]%>" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-danger">Destroy</button>
+          </form>
         </div>
       </div>
+  </div>      
+</div>
+</div>
