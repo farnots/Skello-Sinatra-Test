@@ -12,6 +12,17 @@
           <li class="list-group-item"><%= comment %></li>
         <% end %>
       </ul>
+      <br />
+      <div class="row">
+      <form class="form-inline" action="/posts/<%= @post[:title] %>/comment" method="post">
+        <div class="col">
+        <input name="comment" class="form-control" placeholder="Write your comment"></input>
+        </div>
+        <div class="col">
+        <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+      </div>
     </div>
   </div>
   <div class="col-3">
@@ -19,16 +30,23 @@
     <% if !@post[:rating].nil? %>
 
       <small><%= @post[:rating] %>/10</small>
-      <div class="vote" style="background-color:#dfe6e9">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<%= @post[:rating] %>" aria-valuemin="0" aria-valuemax=10 style="width:<%= Integer(@post[:rating]) * 10 %>%; height:20px;">
+      <div class="vote" style="background-color:#dfe6e9; border-radius:20px;">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<%= @post[:rating] %>" aria-valuemin="0" aria-valuemax=10 style="width:<%= Integer(@post[:rating]) * 10 %>%; height:20px; border-radius:20px;">
 
         <% else %>
 
           <small>0/10</small>
-          <div class="vote" style="background-color:#dfe6e9">
-            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax=10 style="width:0%; height:20px;">
+          <div class="vote" style="background-color:#dfe6e9; border-radius:20px;">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax=10 style="width:0%; height:20px;  border-radius:20px;">
             <% end %>
             </div>
           </div>
+          <br />
+          <form class="form-inline" action="/posts/<%= @post[:title] %>/vote" method="post">
+            <div class="btn-group">
+              <button type="submit" name="vote" value="downvote" class="btn btn-outline-danger">Downvote</button>
+              <button type="submit" name="vote" value="upvote" class="btn btn-outline-success">Upvote</button>
+            </div>
+          </form>
         </div>
       </div>
