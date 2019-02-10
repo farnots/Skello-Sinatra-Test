@@ -17,12 +17,32 @@ class WebApp < Sinatra::Application
     erb :index
   end
 
+  get '/new' do
+    erb :new
+  end
+
+  post '/new' do
+    post = Hash.new
+    post[:title] = params[:title]
+    if params[:photo] != ""
+      post[:photo] = params[:photo]
+    end
+    post[:content] = params[:content]
+    post[:rating] = 0
+    puts post
+    @database.push(post)
+    @comments.push([])
+    save
+    redirect "/posts/#{params[:title]}"
+  end
+  
   get '/posts/:title' do
     @post = @database.find { |post| post[:title] == params[:title]}
     @index = @database.find_index { |post| post[:title] == params[:title]}
     @comment = @comments[@index]
     erb :posts
   end
+
 
   post '/posts/:title/vote' do 
     @post = @database.find { |post| post[:title] == params[:title]}
