@@ -10,13 +10,19 @@ end
 
 get '/posts/:title' do
   @database = DB
-  @database.each do |posts|
-    if posts[:title] == params[:title] 
-      @post = posts
-      puts "success"
-      puts @post
-      break
-    end
-  end
+  @comments = COMMENTS
+  @post = @database.find { |post| post[:title] == params[:title]}
+  @index = @database.find_index { |post| post[:title] == params[:title]}
+  @comment = @comments[@index]
+  puts @comment
   erb :posts
 end
+
+
+# Class Extension 
+class String
+  def truncate(max)
+    length > max ? "#{self[0...max]}..." : self
+  end
+end
+
