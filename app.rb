@@ -33,7 +33,7 @@ class WebApp < Sinatra::Application
     @database.push(post)
     @comments.push([])
     save
-    redirect "/posts/#{params[:title]}"
+    redirect "/posts/#{URI.escape(params[:title])}"
   end
   
   get '/posts/:title' do
@@ -65,7 +65,7 @@ class WebApp < Sinatra::Application
     else
     end
     save
-    redirect "/posts/#{params[:title]}"
+    redirect "/posts/#{URI.escape(params[:title])}"
   end
 
   post '/posts/:title/comment' do
@@ -76,7 +76,7 @@ class WebApp < Sinatra::Application
       @comment.push(@params[:comment])
     end
     save
-    redirect "/posts/#{params[:title]}"
+    redirect "/posts/#{URI.escape(params[:title])}"
   end
 
   get '/404' do
